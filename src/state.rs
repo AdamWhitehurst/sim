@@ -14,9 +14,9 @@ use amethyst::{
 use log::info;
 
 /// A dummy game state that shows 3 sprites.
-pub struct MyState;
+pub struct GlobalState;
 
-impl SimpleState for MyState {
+impl SimpleState for GlobalState {
     // Here, we define hooks that will be called throughout the lifecycle of our game state.
     //
     // In this example, `on_start` is used for initializing entities
@@ -102,7 +102,7 @@ fn load_sprites(world: &mut World) -> Vec<SpriteRender> {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            "sprites/logo.png",
+            "sprites/circle.png",
             ImageFormat::default(),
             (),
             &texture_storage,
@@ -115,7 +115,7 @@ fn load_sprites(world: &mut World) -> Vec<SpriteRender> {
         let loader = world.read_resource::<Loader>();
         let sheet_storage = world.read_resource::<AssetStorage<SpriteSheet>>();
         loader.load(
-            "sprites/logo.ron",
+            "sprites/circle.ron",
             SpriteSheetFormat(texture_handle),
             (),
             &sheet_storage,

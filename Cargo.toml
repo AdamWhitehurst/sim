@@ -1,7 +1,7 @@
 [package]
-name = "amethyst-starter-2d"
+name = "Rust WASM ECS Simulation"
 version = "0.2.0"
-authors = ["Hilmar Wiegand <me@hwgnd.de>", "Amethyst Foundation <contact@amethyst.rs>"]
+authors = ["Adam Whitehurst <adam.whitehurst@live.com>"]
 edition = "2018"
 
 [dependencies]
