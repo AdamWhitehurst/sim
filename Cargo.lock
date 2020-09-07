@@ -94,14 +94,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "amethyst-starter-2d"
-version = "0.2.0"
-dependencies = [
- "amethyst 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "amethyst_animation"
 version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3039,6 +3031,14 @@ dependencies = [
 name = "shrev"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "simulation"
+version = "0.2.0"
+dependencies = [
+ "amethyst 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "siphasher"

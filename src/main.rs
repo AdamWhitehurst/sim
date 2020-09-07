@@ -11,6 +11,7 @@ use amethyst::{
     utils::application_root_dir,
 };
 
+pub mod comp;
 mod state;
 
 fn main() -> amethyst::Result<()> {

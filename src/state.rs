@@ -11,11 +11,23 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
+use super::comp::creature::Creature;
 use log::info;
 
 /// A dummy game state that shows 3 sprites.
 pub struct GlobalState;
 
+impl GlobalState {
+    /// Runs additional setup on ECS World (e.g. registering component storages)
+    fn setup_world(&self, world: &mut World) {
+        self.register_component_storages(world);
+    }
+
+    /// Plugs component storages into the ECS world (e.g. `Creature` components)
+    fn register_component_storages(&self, world: &mut World) {
+        world.register::<Creature>();
+    }
+}
 impl SimpleState for GlobalState {
     // Here, we define hooks that will be called throughout the lifecycle of our game state.
     //
@@ -31,6 +43,8 @@ impl SimpleState for GlobalState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
+        self.setup_world(world);
+
         // Get the screen dimensions so we can initialize the camera and
         // place our sprites correctly later. We'll clone this since we'll
         // pass the world mutably to the following functions.
@@ -40,8 +54,8 @@ impl SimpleState for GlobalState {
         init_camera(world, &dimensions);
 
         // Load our sprites and display them
-        let sprites = load_sprites(world);
-        init_sprites(world, &sprites, &dimensions);
+        let sprite = load_sprite(world);
+        init_creatures(world, &sprite, &dimensions);
 
         create_ui_example(world);
     }
@@ -94,7 +108,7 @@ fn init_camera(world: &mut World, dimensions: &ScreenDimensions) {
 /// which will then be assigned to entities for rendering them.
 ///
 /// The provided `world` is used to retrieve the resource loader.
-fn load_sprites(world: &mut World) -> Vec<SpriteRender> {
+fn load_sprite(world: &mut World) -> SpriteRender {
     // Load the texture for our sprites. We'll later need to
     // add a handle to this texture to our `SpriteRender`s, so
     // we need to keep a reference to it.
@@ -122,37 +136,31 @@ fn load_sprites(world: &mut World) -> Vec<SpriteRender> {
         )
     };
 
-    // Create our sprite renders. Each will have a handle to the texture
-    // that it renders from. The handle is safe to clone, since it just
-    // references the asset.
-    (0..3)
-        .map(|i| SpriteRender {
-            sprite_sheet: sheet_handle.clone(),
-            sprite_number: i,
-        })
-        .collect()
+    SpriteRender {
+        sprite_sheet: sheet_handle.clone(),
+        sprite_number: 1,
+    }
 }
 
 /// Creates an entity in the `world` for each of the provided `sprites`.
 /// They are individually placed around the center of the screen.
-fn init_sprites(world: &mut World, sprites: &[SpriteRender], dimensions: &ScreenDimensions) {
-    for (i, sprite) in sprites.iter().enumerate() {
-        // Center our sprites around the center of the window
-        let x = (i as f32 - 1.) * 100. + dimensions.width() * 0.5;
-        let y = (i as f32 - 1.) * 100. + dimensions.height() * 0.5;
-        let mut transform = Transform::default();
-        transform.set_translation_xyz(x, y, 0.);
+fn init_creatures(world: &mut World, sprite: &SpriteRender, dimensions: &ScreenDimensions) {
+    // Center our sprites around the center of the window
+    let x = dimensions.width() * 0.5;
+    let y = dimensions.height() * 0.5;
+    let mut transform = Transform::default();
+    transform.set_translation_xyz(x, y, 0.);
 
-        // Create an entity for each sprite and attach the `SpriteRender` as
-        // well as the transform. If you want to add behaviour to your sprites,
-        // you'll want to add a custom `Component` that will identify them, and a
-        // `System` that will iterate over them. See https://book.amethyst.rs/stable/concepts/system.html
-        world
-            .create_entity()
-            .with(sprite.clone())
-            .with(transform)
-            .build();
-    }
+    // Create an entity for each sprite and attach the `SpriteRender` as
+    // well as the transform. If you want to add behaviour to your sprites,
+    // you'll want to add a custom `Component` that will identify them, and a
+    // `System` that will iterate over them. See https://book.amethyst.rs/stable/concepts/system.html
+    world
+        .create_entity()
+        .with(sprite.clone())
+        .with(transform)
+        .with(Creature::default())
+        .build();
 }
 
 /// Creates a simple UI background and a UI text label

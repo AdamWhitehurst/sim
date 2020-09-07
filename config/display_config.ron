@@ -1,4 +1,4 @@
 (
-  title: "Amethyst Starter 2D template",
+  title: "Sim",
   dimensions: Some((800, 600)),
 )
