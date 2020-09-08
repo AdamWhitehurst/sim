@@ -14,6 +14,7 @@ use amethyst::{
 use super::comp::creature::Creature;
 use log::info;
 
+const SCALE_SIZE: f32 = 0.02;
 /// A dummy game state that shows 3 sprites.
 pub struct GlobalState;
 
@@ -149,8 +150,13 @@ fn init_creatures(world: &mut World, sprite: &SpriteRender, dimensions: &ScreenD
     let x = dimensions.width() * 0.5;
     let y = dimensions.height() * 0.5;
     let mut transform = Transform::default();
+    let creature = Creature::new();
     transform.set_translation_xyz(x, y, 0.);
-    transform.set_scale(Vector3::new(0.25, 0.25, 0.25));
+    transform.set_scale(Vector3::new(
+        SCALE_SIZE * creature.size as f32,
+        SCALE_SIZE * creature.size as f32,
+        1.,
+    ));
 
     // Create an entity for each sprite and attach the `SpriteRender` as
     // well as the transform. If you want to add behaviour to your sprites,
@@ -160,7 +166,7 @@ fn init_creatures(world: &mut World, sprite: &SpriteRender, dimensions: &ScreenD
         .create_entity()
         .with(sprite.clone())
         .with(transform)
-        .with(Creature::default())
+        .with(creature)
         .build();
 }
 
@@ -168,7 +174,7 @@ fn init_creatures(world: &mut World, sprite: &SpriteRender, dimensions: &ScreenD
 /// This is the pure code only way to create UI with amethyst.
 pub fn create_ui_example(world: &mut World) {
     // this creates the simple gray background UI element.
-    let ui_background = world
+    let _ui_background = world
         .create_entity()
         .with(UiImage::SolidColor([0.6, 0.1, 0.2, 1.0]))
         .with(UiTransform::new(
