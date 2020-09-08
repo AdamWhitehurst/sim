@@ -3,7 +3,8 @@ use amethyst::core::math::Vector3;
 use amethyst::core::{timing::Time, Transform};
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use rand::prelude::*;
-// Store data that is local to only this system on this struct
+// Note: Store data that is local to only this system on this struct
+/// A system that randomly moves creature components' transforms
 pub struct Sys;
 
 impl<'a> System<'a> for Sys {
