@@ -1,17 +1,35 @@
+// Allows `Some((0.0, 0.0))` to be written as `(0.0, 0.0)`
+// #![enable(implicit_some)] 
+
 List((
+    // Width of the texture used by the sprite sheet
     texture_width: 2048,
+    // Height of the texture used by the sprite sheet
     texture_height: 1024,
+    // List of sprites the sheet holds
     sprites: [
         (
+            // Horizontal position of the sprite in the sprite sheet
             x: 0,
+            // Vertical position of the sprite in the sprite sheet
             y: 0,
+            // Width of the sprite
             width: 1024,
+            // Height of the sprite
             height: 1024,
+             // Number of pixels to shift the sprite to the left and down
+             // relative to the entity holding it when rendering.
+             // This is optional and defaults to (0.0, 0.0), may be omitted
+             offsets: Some((0.0, 0.0)),
         ),
         (
+            // Horizontal position of the sprite in the sprite sheet
             x: 1024,
+            // Vertical position of the sprite in the sprite sheet
             y: 0,
+            // Width of the sprite
             width: 1024,
+            // Height of the sprite
             height: 1024,
         )
         
