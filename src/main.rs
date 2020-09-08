@@ -13,6 +13,7 @@ use amethyst::{
 
 pub mod comp;
 mod state;
+pub mod sys;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
