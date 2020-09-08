@@ -15,6 +15,8 @@ pub mod comp;
 mod state;
 pub mod sys;
 
+const MOVEMENT_SYS: &str = "MOVEMENT_SYS";
+
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
@@ -38,7 +40,8 @@ fn main() -> amethyst::Result<()> {
                 )
                 .with_plugin(RenderUi::default())
                 .with_plugin(RenderFlat2D::default()),
-        )?;
+        )?
+        .with(sys::movement::Sys, MOVEMENT_SYS, &[]);
 
     let mut game = Application::new(resources, state::GlobalState, game_data)?;
     game.run();
