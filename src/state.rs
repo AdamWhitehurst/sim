@@ -1,6 +1,6 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
-    core::transform::Transform,
+    core::{math::Vector3, transform::Transform},
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
@@ -150,6 +150,7 @@ fn init_creatures(world: &mut World, sprite: &SpriteRender, dimensions: &ScreenD
     let y = dimensions.height() * 0.5;
     let mut transform = Transform::default();
     transform.set_translation_xyz(x, y, 0.);
+    transform.set_scale(Vector3::new(0.25, 0.25, 0.25));
 
     // Create an entity for each sprite and attach the `SpriteRender` as
     // well as the transform. If you want to add behaviour to your sprites,
