@@ -24,8 +24,8 @@ impl<'a> System<'a> for Sys {
         for (creature, transform) in (&data.1, &mut data.2).join() {
             let dt = data.0.delta_time();
             // Random movement
-            let dx = rng.gen_range(-1.0, 1.0) * dt.as_secs_f32();
-            let dy = rng.gen_range(-1.0, 1.0) * dt.as_secs_f32();
+            let dx = rng.gen_range(-1.0, 1.0) * dt.as_secs_f32() * creature.movespeed;
+            let dy = rng.gen_range(-1.0, 1.0) * dt.as_secs_f32() * creature.movespeed;
 
             transform.append_translation(Vector3::new(dx, dy, 0.));
         }
